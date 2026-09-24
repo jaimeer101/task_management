@@ -33,7 +33,7 @@ composer install
 6. Install node \
 npm install
 7. Run migration \
-php artisan migrate
+php artisan migrate 
 8. Run the below command to insert data \
 php artisan db:seed
 9. Generate application key \
