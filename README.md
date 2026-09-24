@@ -1,8 +1,8 @@
 
 ## Project Name
-Laravel My Template
+Task Management System
 ## Project Description
-AdminLTE 4 implementation in Laravel and vue
+A system where users can manage their tasks
 ## Tech Stack
 **Frontend (Client):**
 * **Framework:** [Vue 3](https://vuejs.org/) (Composition API)
