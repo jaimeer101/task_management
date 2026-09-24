@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\TaskAPIController;
+use App\Http\Controllers\API\UserAPIController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -49,6 +50,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/users/edit/{userId}', [UserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/update/{userId}', [UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/delete/{userId}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+    Route::prefix('api')->group(function () {
+        Route::get('/users', [UserAPIController::class, 'index'])->name('api.users.index');
+
+        Route::delete('/users/delete/{userId}', [UserAPIController::class, 'destroy'])->name('api.users.destroy');
+    });
 });
 
 
