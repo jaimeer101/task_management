@@ -12,9 +12,9 @@ import { Head } from "@inertiajs/vue3";
         <template #header>Dashboard Overview</template>
 
         <!-- Alert Component -->
-        <Alert variant="success" icon="bi-check-circle-fill">
+        <!-- <Alert variant="success" icon="bi-check-circle-fill">
             Data synced successfully!
-        </Alert>
+        </Alert> -->
 
         <!-- Stat Boxes Row -->
         <div class="row">

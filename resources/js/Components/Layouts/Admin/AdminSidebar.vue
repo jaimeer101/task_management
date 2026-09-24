@@ -1,6 +1,23 @@
 <!-- resources/js/Layouts/Admin/Sidebar.vue -->
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
+
+const page = usePage();
+const menuItems = computed(() => page.props.menu || []);
+const isActive = (href) => {
+    // Convert absolute URL (http://127.0.0.1:8000/dashboard) into just the pathname (/dashboard)
+    const path = new URL(href).pathname;
+
+    // Use an exact match for the dashboard to prevent false positives
+    if (path === "/dashboard") {
+        return page.url === path;
+    }
+
+    // Use startsWith for other resource pages (e.g., /users, /tasks)
+    // so nested routes like /users/create still highlight the "Users" menu
+    return page.url.startsWith(path);
+};
 </script>
 
 <template>
@@ -9,7 +26,7 @@ import { Link } from "@inertiajs/vue3";
         <div class="sidebar-brand">
             <Link href="/dashboard" class="brand-link">
                 <i class="bi bi-speedometer2 me-2"></i>
-                <span class="brand-text fw-light">AdminLTE 4</span>
+                <span class="brand-text fw-light">Task Manager</span>
             </Link>
         </div>
 
@@ -21,31 +38,26 @@ import { Link } from "@inertiajs/vue3";
                     data-lte-toggle="treeview"
                     role="menu"
                 >
-                    <li class="nav-item">
-                        <Link
-                            href="/dashboard"
-                            class="nav-link"
-                            :class="{ active: $page.url === '/dashboard' }"
-                        >
-                            <i class="nav-icon bi bi-speedometer"></i>
-                            <p>Dashboard</p>
-                        </Link>
-                    </li>
+                    <template v-for="(item, index) in menuItems" :key="index">
+                        <!-- Render Header -->
+                        <li v-if="item.type === 'header'" class="nav-header">
+                            {{ item.name }}
+                        </li>
 
-                    <li class="nav-header">MANAGEMENT</li>
-
-                    <li class="nav-item">
-                        <Link
-                            href="/profile"
-                            class="nav-link"
-                            :class="{
-                                active: $page.url.startsWith('/profile'),
-                            }"
-                        >
-                            <i class="nav-icon bi bi-person"></i>
-                            <p>Profile Settings</p>
-                        </Link>
-                    </li>
+                        <!-- Render Link -->
+                        <li v-else-if="item.type === 'link'" class="nav-item">
+                            <Link
+                                :href="item.href"
+                                class="nav-link"
+                                :class="{
+                                    active: isActive(item.href),
+                                }"
+                            >
+                                <i :class="['nav-icon', item.icon]"></i>
+                                <p>{{ item.name }}</p>
+                            </Link>
+                        </li>
+                    </template>
                 </ul>
             </nav>
         </div>

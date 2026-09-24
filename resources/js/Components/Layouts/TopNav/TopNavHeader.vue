@@ -14,7 +14,7 @@ console.log(user.value);
             <!-- Brand Logo -->
             <Link href="/" class="navbar-brand me-4">
                 <i class="bi bi-speedometer2 me-2 text-primary"></i>
-                <span class="brand-text fw-bold">My Application</span>
+                <span class="brand-text fw-bold">Task Manager</span>
             </Link>
 
             <!-- Mobile Toggler -->
@@ -42,7 +42,7 @@ console.log(user.value);
                         >
                     </li>
                     <li class="nav-item">
-                        <a href="#features" class="nav-link">Features</a>
+                        <a href="#features" class="nav-link">Docs</a>
                     </li>
                     <li class="nav-item">
                         <a href="#about" class="nav-link">About</a>
@@ -66,9 +66,9 @@ console.log(user.value);
                         >
                             Log in
                         </Link>
-                        <Link href="/register" class="btn btn-primary btn-sm">
+                        <!-- <Link href="/register" class="btn btn-primary btn-sm">
                             Register
-                        </Link>
+                        </Link> -->
                     </template>
                 </div>
             </div>

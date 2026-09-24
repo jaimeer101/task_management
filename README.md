@@ -36,10 +36,17 @@ npm install
 php artisan migrate
 8. Run the below command to insert data \
 php artisan db:seed
+9. Generate application key \
+php artisan key:generate
 9. Run php artisan serve
 10. In separate tab run npm run serve
 
 
 ## Login Credentials
-**Username:** test@example.com \
-**Password:** password
+### Administrator
+**Username:** admin@taskmanager.com \
+**Password:** password123
+
+### User
+**Username:** user1@taskmanager.com \
+**Password:** password123
