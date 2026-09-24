@@ -47,6 +47,10 @@ php artisan key:generate
 **Username:** admin@taskmanager.com \
 **Password:** password123
 
-### User
+### User 1
 **Username:** user1@taskmanager.com \
+**Password:** password123
+
+### User 2
+**Username:** user2@taskmanager.com \
 **Password:** password123
