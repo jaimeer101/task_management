@@ -19,7 +19,7 @@ class TaskController extends Controller
     use AuthorizesRequests;
     public function index()
     {
-        
+
         return Inertia::render('Task/Index');
     }
 
@@ -33,7 +33,8 @@ class TaskController extends Controller
             'label' => $status->label(),
         ]);
         $data = [
-            "statuses" => $statuses, 
+            "dateStarted" => date("Y-m-d"),
+            "statuses" => $statuses,
         ];
         if (auth()->user()->hasRole('admin')) {
             $data['users'] = User::select('id', 'name')->get();
@@ -66,13 +67,23 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $this->authorize('update', $task);
+        // dump($task);
         $statuses = collect(TaskStatus::cases())->map(fn($status) => [
             'value' => $status->value,
             'label' => $status->label(),
         ]);
         $data = [
-            "statuses" => $statuses, 
-            "task" => $task
+            "statuses" => $statuses,
+            'task' => [
+                'id' => $task->id,
+                'title' => $task->title,
+                'description' => $task->description,
+                'task_status' => $task->task_status?->value ?? $task->task_status,
+                'user_id' => $task->user_id,
+                'date_started' => $task->date_started?->format('Y-m-d'),
+                'date_deadline' => $task->date_deadline?->format('Y-m-d'),
+                'date_completed' => $task->date_completed?->format('Y-m-d'),
+            ],
         ];
         if (auth()->user()->hasRole('admin')) {
             $data['users'] = User::select('id', 'name')->get();

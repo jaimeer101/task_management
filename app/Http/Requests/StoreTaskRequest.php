@@ -45,6 +45,9 @@ class StoreTaskRequest extends FormRequest
                 }),
             ],
             'description' => 'required|string',
+            'date_started' => 'required|string',
+            'date_completed' => 'nullable|string|before_or_equal:today',
+            'date_deadline' => 'nullable|string',
             'task_status' => ['required', new Enum(TaskStatus::class)], // Validates against your TaskStatus enum[cite: 3]
             'user_id' => 'required|exists:users,id',
         ];

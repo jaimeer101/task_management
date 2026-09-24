@@ -9,6 +9,9 @@ const taskColumns = ref([
     { key: "id", label: "ID" },
     { key: "title", label: "Task Title" },
     { key: "assigned_user", label: "Assigned User" }, // Supports nested relationships automatically
+    { key: "date_started", label: "Start Date" },
+    { key: "date_completed", label: "Completion Date" },
+    { key: "date_deadline", label: "Target Date" },
     { key: "task_status", label: "Status" },
 ]);
 
@@ -33,6 +36,14 @@ const deleteTask = (id: number) => {
 
         <div>
             <APIDatatabe :api-url="'/api/tasks'" :columns="taskColumns">
+                <template #title="{ item }">
+                    <span :class="{ 'text-danger fw-bold': item.is_delayed }">
+                        {{ item.title }}
+                    </span>
+                    <span v-if="item.is_delayed" class="badge bg-danger ms-2"
+                        >Delayed</span
+                    >
+                </template>
                 <template #id="{ index, pagination }">
                     <span class="text-body-md font-body-md text-text-secondary">
                         <!-- <pre>{{ pagination }}</pre> -->

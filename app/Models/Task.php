@@ -13,7 +13,17 @@ use Illuminate\Support\Facades\Auth;
 class Task extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['user_id', 'title', 'description', 'task_status', 'status', 'remarks'];
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'task_status', 
+        'date_started', 
+        'date_completed', 
+        'date_deadline', 
+        'status',
+        'remarks'
+    ];
     protected static function booted()
     {
         static::creating(function ($task) {     // or whatever flag you use
@@ -32,8 +42,12 @@ class Task extends Model
     }
     protected $casts = [
         'task_status' => TaskStatus::class,
+        'date_started' => 'date',    
+        'date_completed' => 'date',   
+        'date_deadline' => 'date',
     ];
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
@@ -42,21 +56,21 @@ class Task extends Model
         // 1. Role-based isolation (Admin sees all, regular user sees own)
         if (! $user->hasRole('admin')) {
             $query->where('user_id', $user->id);
-        } 
+        }
         $query->with('user');
         // 2. Search filter
         if (!empty($filters['search'])) {
             $search = $filters['search'];
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                    ->orWhere('description', 'like', "%{$search}%");
             });
         }
 
         // 3. Dynamic Sorting
         $sortBy = $filters['sort_by'] ?? 'id';
         $sortDirection = $filters['sort_direction'] ?? 'desc';
-        
+
         return $query->orderBy($sortBy, $sortDirection);
     }
 }

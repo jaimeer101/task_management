@@ -20,6 +20,10 @@ const props = defineProps({
         type: Number,
         default: null, // Will only be populated if the user is an admin
     },
+    dateStarted: {
+        type: String,
+        default: null,
+    },
 });
 const page = usePage();
 const flashSuccess = computed(() => page.props.flash.success);
@@ -30,8 +34,11 @@ const form = useForm({
     description: props.task?.description ?? "",
     task_status: props.task?.task_status ?? "on-going", // Adjust field name to match your DB column
     user_id: props.task?.user_id ?? props.selectedUser,
+    date_started: props.task?.date_started ?? props.dateStarted,
+    date_deadline: props.task?.date_deadline ?? "",
+    date_completed: props.task?.date_completed ?? "",
 });
-
+const today = new Date().toLocaleDateString("en-ca");
 // Submit handler: POST for create, PUT for update
 const submit = () => {
     if (props.task) {
@@ -130,6 +137,58 @@ const submit = () => {
                                     class="text-danger small mt-1"
                                 >
                                     {{ form.errors.description }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="date_started"
+                                    >Date Started</label
+                                >
+                                <input
+                                    type="date"
+                                    name="date_started"
+                                    v-model="form.date_started"
+                                    class="form-control"
+                                />
+                                <div
+                                    v-if="form.errors.date_started"
+                                    class="text-danger small mt-1"
+                                >
+                                    {{ form.errors.date_started }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="date_deadline"
+                                    >Target Date</label
+                                >
+                                <input
+                                    type="date"
+                                    name="date_deadline"
+                                    v-model="form.date_deadline"
+                                    class="form-control"
+                                />
+                                <div
+                                    v-if="form.errors.date_deadline"
+                                    class="text-danger small mt-1"
+                                >
+                                    {{ form.errors.date_deadline }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="date_completed"
+                                    >Date Completed</label
+                                >
+                                <input
+                                    type="date"
+                                    name="date_completed"
+                                    v-model="form.date_completed"
+                                    class="form-control"
+                                    :max="today"
+                                />
+                                <div
+                                    v-if="form.errors.date_completed"
+                                    class="text-danger small mt-1"
+                                >
+                                    {{ form.errors.date_completed }}
                                 </div>
                             </div>
                             <div class="mb-3">

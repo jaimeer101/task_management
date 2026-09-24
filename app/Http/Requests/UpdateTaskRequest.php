@@ -44,7 +44,10 @@ class UpdateTaskRequest extends FormRequest
                     return $query->where('user_id', $this->input('user_id'));
                 })->ignore($task),
             ],
-            'description' => 'nullable|string',
+            'description' => 'nullable|string', 
+            'date_started' => 'required|string',
+            'date_completed' => 'nullable|string|before_or_equal:today',
+            'date_deadline' => 'nullable|string',
             'task_status' => ['required', new Enum(TaskStatus::class)],
             'user_id' => 'required|exists:users,id',
         ];
