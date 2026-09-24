@@ -38,8 +38,10 @@ php artisan migrate
 php artisan db:seed
 9. Generate application key \
 php artisan key:generate
-9. Run php artisan serve
-10. In separate tab run npm run serve
+9. Run \
+php artisan serve
+10. In separate tab run \
+npm run serve
 
 
 ## Login Credentials
