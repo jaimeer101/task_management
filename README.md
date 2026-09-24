@@ -28,11 +28,11 @@ DB_PORT=database server port\
 DB_DATABASE=database name\
 DB_USERNAME=database username\
 DB_PASSWORD=database password
-5. Install composer
+5. Install composer \
 composer install
-6. Install node
+6. Install node \
 npm install
-7. Run migration
+7. Run migration \
 php artisan migrate
 8. Run the below command to insert data \
 php artisan db:seed
