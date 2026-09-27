@@ -41,7 +41,7 @@ php artisan key:generate
 9. Run \
 php artisan serve
 10. In separate tab run \
-npm run serve
+npm run dev
 
 
 ## Login Credentials
